@@ -26,6 +26,28 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Create CA and certificate for https
+
+[mkcert](https://www.npmjs.com/package/mkcert)
+
+```bash
+# Generate CA
+$ pnpm dlx mkcert create-ca --organization HKTDC
+
+# Generate certification
+pnpm dlx mkcert create-cert --organization HKTDC --domains prkwan.hktdc.com
+
+```
+
+## Configure localhost
+
+```
+Edit C:\Windows\System32\drivers\etc\hosts
+
+Add 127.0.0.1 prkwan.hktdc.com
+
+```
+
 ## Installation
 
 ```bash

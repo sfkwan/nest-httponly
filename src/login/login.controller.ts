@@ -8,14 +8,14 @@ export class LoginController {
     res.cookie('refresh_token', 'thisIsRefreshToken', {
       expires: new Date(Date.now() + 900000),
       httpOnly: true,
-      sameSite: 'lax',
+      sameSite: 'none',
       secure: true,
     });
 
     res.cookie('access_token', 'thisIsAccessToken', {
       expires: new Date(Date.now() + 900000),
       httpOnly: true,
-      sameSite: 'lax',
+      sameSite: 'none',
       secure: true,
     });
 
