@@ -7,65 +7,32 @@ import {
   Post,
   Put,
   Req,
-  Res,
 } from '@nestjs/common';
 import { CreateCatDto } from './dto/create.cat.dto';
 
-import { Request, Response } from 'express';
+import { Request } from 'express';
 
 @Controller('cats')
 export class CatsController {
   @Post()
-  create(
-    @Body() createCatDto: CreateCatDto,
-    @Res({ passthrough: true }) res: Response,
-  ) {
-    res.cookie('rememberme', createCatDto.name, {
-      expires: new Date(Date.now() + 900000),
-      // httpOnly: true,
-      // sameSite: 'lax',
-      // secure: true,
-    });
+  create(@Body() createCatDto: CreateCatDto) {
     return createCatDto;
   }
   @Get()
   findAll(@Req() req: Request): CreateCatDto {
-    const cookie = req.cookies['rememberme'];
-    console.log(cookie);
-
     console.log(req.cookies);
 
-    const cat = {
-      name: 'Preston',
+    const cat: CreateCatDto = {
+      name: 'Chewie',
       age: 10,
-      breed: 'Chicken',
+      breed: 'Golden Retriever',
     };
     return cat;
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string, @Res({ passthrough: true }) res: Response) {
-    res.cookie('rememberme', id, {
-      expires: new Date(Date.now() + 900000),
-      httpOnly: true,
-      sameSite: 'lax',
-      secure: true,
-      //domain: 'http://localhost:3010',
-    });
-
-    res.cookie('access_token', 'eadsad.asdfa.asddas', {
-      expires: new Date(Date.now() + 900000),
-      httpOnly: true,
-      sameSite: 'lax',
-      secure: true,
-    });
-
-    const cat = {
-      name: 'Preston',
-      age: 10,
-      breed: 'Chicken',
-    };
-    return cat;
+  findOne(@Param('id') id: string) {
+    return `This action return a cat with ${id}`;
   }
 
   @Put(':id')
