@@ -14,10 +14,6 @@ import { Request } from 'express';
 
 @Controller('cats')
 export class CatsController {
-  @Post()
-  create(@Body() createCatDto: CreateCatDto) {
-    return createCatDto;
-  }
   @Get()
   findAll(@Req() req: Request): CreateCatDto {
     console.log(req.cookies);
@@ -28,6 +24,11 @@ export class CatsController {
       breed: 'Golden Retriever',
     };
     return cat;
+  }
+
+  @Post()
+  create(@Body() createCatDto: CreateCatDto) {
+    return createCatDto;
   }
 
   @Get(':id')
