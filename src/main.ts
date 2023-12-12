@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 
 import cookieParser from 'cookie-parser';
 import fs from 'fs';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const httpsOptions = {
@@ -13,11 +14,20 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     httpsOptions,
   });
+
+  console.log();
   app.enableCors({
-    origin: ['http://localhost:3000', 'http://localhost:3001'],
+    origin: [
+      'http://localhost:3000',
+      'https://localhost:3000',
+      'http://localhost:3001',
+    ],
     credentials: true,
   });
   app.use(cookieParser());
-  await app.listen(3010, 'prkwan.hktdc.com');
+
+  const hostname = app.get(ConfigService).get('HOSTNAME') || 'localhost';
+
+  await app.listen(3010, hostname);
 }
 bootstrap();

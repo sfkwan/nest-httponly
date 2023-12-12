@@ -35,7 +35,7 @@
 $ pnpm dlx mkcert create-ca --organization HKTDC
 
 # Generate certification
-pnpm dlx mkcert create-cert --organization HKTDC --domains prkwan.hktdc.com
+pnpm dlx mkcert create-cert --organization HKTDC --domains api-prkwan.hktdc.com
 
 ```
 
@@ -44,7 +44,7 @@ pnpm dlx mkcert create-cert --organization HKTDC --domains prkwan.hktdc.com
 ```
 Edit C:\Windows\System32\drivers\etc\hosts
 
-Add 127.0.0.1 prkwan.hktdc.com
+Add 127.0.0.1 api-prkwan.hktdc.com
 
 ```
 
