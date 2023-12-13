@@ -11,29 +11,32 @@ import {
 import { CreateCatDto } from './dto/create.cat.dto';
 
 import { Request } from 'express';
+import { CatsService } from './cats.service';
+import { ICat } from './interface/cats.interface';
+import { ApiconfigService } from '../apiconfig/apiconfig.service';
 
 @Controller('cats')
 export class CatsController {
+  constructor(
+    private apiConfigService: ApiconfigService,
+    private catService: CatsService,
+  ) {}
+
   @Get()
-  findAll(@Req() req: Request): CreateCatDto {
+  async findAll(@Req() req: Request): Promise<ICat[]> {
     console.log(req.cookies);
 
-    const cat: CreateCatDto = {
-      name: 'Chewie',
-      age: 10,
-      breed: 'Golden Retriever',
-    };
-    return cat;
+    return this.catService.findAll();
   }
 
   @Post()
   create(@Body() createCatDto: CreateCatDto) {
-    return createCatDto;
+    return this.catService.create(createCatDto);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return `This action return a cat with ${id}`;
+    return `This action return a cat with ${id} ${this.apiConfigService.port} ${this.apiConfigService.hostName}`;
   }
 
   @Put(':id')

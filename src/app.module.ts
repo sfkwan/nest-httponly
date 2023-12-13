@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CatsController } from './cats/cats.controller';
-import { LoginController } from './login/login.controller';
-import { ConfigModule } from '@nestjs/config';
+import { ApiconfigModule } from './apiconfig/apiconfig.module';
+import { CatsModule } from './cats/cats.module';
+import { LoginModule } from './login/login.module';
 
 @Module({
-  imports: [ConfigModule.forRoot()],
-  controllers: [AppController, CatsController, LoginController],
+  imports: [ApiconfigModule, CatsModule, LoginModule],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

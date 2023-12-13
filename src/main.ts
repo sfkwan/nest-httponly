@@ -26,7 +26,9 @@ async function bootstrap() {
   });
   app.use(cookieParser());
 
-  const hostname = app.get(ConfigService).get('HOSTNAME') || 'localhost';
+  const configService = app.get(ConfigService);
+
+  const hostname = configService.get('HOSTNAME') || 'localhost';
 
   await app.listen(3010, hostname);
 }
