@@ -4,6 +4,8 @@ import { AppModule } from './app.module';
 import cookieParser from 'cookie-parser';
 import fs from 'fs';
 import { ConfigService } from '@nestjs/config';
+import { WinstonModule } from 'nest-winston';
+import { instance } from './logger/winston.logger';
 
 async function bootstrap() {
   const httpsOptions = {
@@ -13,6 +15,7 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule, {
     httpsOptions,
+    logger: WinstonModule.createLogger({ instance }),
   });
 
   console.log();
@@ -29,7 +32,6 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
 
   const hostname = configService.get('HOSTNAME') || 'localhost';
-
   await app.listen(3010, hostname);
 }
 bootstrap();

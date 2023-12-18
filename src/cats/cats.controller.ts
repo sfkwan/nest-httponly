@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
   Post,
   Put,
@@ -20,11 +21,13 @@ export class CatsController {
   constructor(
     private apiConfigService: ApiconfigService,
     private catService: CatsService,
+    private readonly logger: Logger, // instantiate logger
   ) {}
 
   @Get()
   async findAll(@Req() req: Request): Promise<ICat[]> {
-    console.log(req.cookies);
+    this.logger.error(`These are all the cats`);
+    this.logger.error(JSON.stringify(req.cookies));
 
     return this.catService.findAll();
   }
