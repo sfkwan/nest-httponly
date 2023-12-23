@@ -7,16 +7,20 @@ import {
   Param,
   Post,
   Put,
-  Req,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateCatDto } from './dto/create.cat.dto';
 
-import { Request } from 'express';
 import { CatsService } from './cats.service';
 import { ICat } from './interface/cats.interface';
 import { ApiconfigService } from '../apiconfig/apiconfig.service';
+import { Public } from '../auth/meta/publicMeta';
+import { AuthGuard } from '../auth/auth.guard';
+import { Roles } from '../auth/meta/roles.decorator';
+import { RolesGuard } from '../roles/roles.guard';
 
 @Controller('cats')
+@UseGuards(AuthGuard, RolesGuard)
 export class CatsController {
   constructor(
     private apiConfigService: ApiconfigService,
@@ -24,15 +28,14 @@ export class CatsController {
     private readonly logger: Logger, // instantiate logger
   ) {}
 
+  @Public()
   @Get()
-  async findAll(@Req() req: Request): Promise<ICat[]> {
-    this.logger.error(`These are all the cats`);
-    this.logger.error(JSON.stringify(req.cookies));
-
+  async findAll(): Promise<ICat[]> {
     return this.catService.findAll();
   }
 
   @Post()
+  @Roles(['admin'])
   create(@Body() createCatDto: CreateCatDto) {
     return this.catService.create(createCatDto);
   }

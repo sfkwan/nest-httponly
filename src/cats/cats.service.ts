@@ -5,8 +5,9 @@ import { ICat } from './interface/cats.interface';
 export class CatsService {
   private readonly cats: ICat[] = [];
 
-  create(cat: ICat) {
+  create(cat: ICat): ICat {
     this.cats.push(cat);
+    return cat;
   }
 
   findAll(): ICat[] {

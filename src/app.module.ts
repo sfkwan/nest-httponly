@@ -5,9 +5,11 @@ import { ApiconfigModule } from './apiconfig/apiconfig.module';
 import { CatsModule } from './cats/cats.module';
 import { LoginModule } from './login/login.module';
 import { SimpleLoggerMiddleware } from './middleware/simple-logger.middleware';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [ApiconfigModule, CatsModule, LoginModule],
+  imports: [ApiconfigModule, CatsModule, LoginModule, AuthModule, UsersModule],
   controllers: [AppController],
   providers: [AppService, Logger],
 })
