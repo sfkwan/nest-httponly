@@ -6,6 +6,7 @@ import fs from 'fs';
 import { ConfigService } from '@nestjs/config';
 import { WinstonModule } from 'nest-winston';
 import { instance } from './logger/winston.logger';
+import helmet from 'helmet';
 
 async function bootstrap() {
   const httpsOptions = {
@@ -27,6 +28,8 @@ async function bootstrap() {
     ],
     credentials: true,
   });
+
+  app.use(helmet());
   app.use(cookieParser());
 
   const configService = app.get(ConfigService);
