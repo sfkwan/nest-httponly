@@ -4,13 +4,18 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
   Logger,
+  LoggerService,
   Param,
   Post,
   Put,
   Req,
+<<<<<<< HEAD
   Res,
   UseFilters,
+=======
+>>>>>>> origin/master
   UseGuards,
 } from '@nestjs/common';
 import { CreateCatDto } from './dto/create.cat.dto';
@@ -25,13 +30,19 @@ import { RolesGuard } from '../roles/roles.guard';
 import { HttpExceptionFilter } from '../http-exception/http-exception.filter';
 import { Request } from 'express';
 
+import { Request } from 'express';
+import { ClsService } from 'nestjs-cls';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
+
 @Controller('cats')
 @UseGuards(AuthGuard, RolesGuard)
 export class CatsController {
   constructor(
+    private readonly cls: ClsService,
     private apiConfigService: ApiconfigService,
     private catService: CatsService,
-    private readonly logger: Logger, // instantiate logger
+    @Inject(WINSTON_MODULE_NEST_PROVIDER)
+    private readonly logger: LoggerService, // instantiate logger
   ) {}
 
   @Public()
@@ -40,6 +51,11 @@ export class CatsController {
     this.logger.debug(`cookeies:  ${req.cookies.access_token}`);
     this.logger.debug(`cookeies:  ${req.cookies.refresh_token}`);
 
+    const xRequestId = this.cls.get('x-request-id');
+    this.logger.log({
+      'Access token': req.cookies['access-token'],
+      'x-request-id': xRequestId,
+    });
     return this.catService.findAll();
   }
   @Public()
