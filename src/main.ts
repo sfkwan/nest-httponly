@@ -4,7 +4,7 @@ import { AppModule } from './app.module';
 import cookieParser from 'cookie-parser';
 import fs from 'fs';
 import { ConfigService } from '@nestjs/config';
-import { WinstonModule } from 'nest-winston';
+import { WINSTON_MODULE_NEST_PROVIDER, WinstonModule } from 'nest-winston';
 import { instance } from './logger/winston.logger';
 import helmet from 'helmet';
 
@@ -16,8 +16,11 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule, {
     httpsOptions,
-    logger: WinstonModule.createLogger({ instance }),
+    bufferLogs: true,
+    // logger: WinstonModule.createLogger({ instance }),
   });
+
+  app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
 
   console.log();
   app.enableCors({
@@ -25,6 +28,7 @@ async function bootstrap() {
       'http://localhost:3000',
       'https://localhost:3000',
       'http://localhost:3001',
+      'http://web-prkwan.bochk.com:3000',
     ],
     credentials: true,
   });
