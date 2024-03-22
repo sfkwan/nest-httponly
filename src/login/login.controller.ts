@@ -5,18 +5,20 @@ import { Response } from 'express';
 export class LoginController {
   @Get()
   findOne(@Res({ passthrough: true }) res: Response) {
-    res.cookie('refresh_token', 'thisIsRefreshToken', {
+    res.cookie('refresh_token', 'verify', {
       expires: new Date(Date.now() + 900000),
       httpOnly: true,
       sameSite: 'none',
       secure: true,
+      path: '/verify',
     });
 
-    res.cookie('access_token', 'thisIsAccessToken', {
+    res.cookie('access_token', 'verify', {
       expires: new Date(Date.now() + 900000),
       httpOnly: true,
       sameSite: 'none',
       secure: true,
+      path: '/verify',
     });
 
     const login = {

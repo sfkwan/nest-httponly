@@ -7,9 +7,17 @@ import { LoginModule } from './login/login.module';
 import { SimpleLoggerMiddleware } from './middleware/simple-logger.middleware';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { LoggerModule } from './logger/logger.module';
 
 @Module({
-  imports: [ApiconfigModule, CatsModule, LoginModule, AuthModule, UsersModule],
+  imports: [
+    ApiconfigModule,
+    CatsModule,
+    LoginModule,
+    AuthModule,
+    UsersModule,
+    LoggerModule,
+  ],
   controllers: [AppController],
   providers: [AppService, Logger],
 })

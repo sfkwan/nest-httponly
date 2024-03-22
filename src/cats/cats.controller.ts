@@ -1,5 +1,6 @@
 import {
   Body,
+  ConflictException,
   Controller,
   Delete,
   Get,
@@ -7,6 +8,9 @@ import {
   Param,
   Post,
   Put,
+  Req,
+  Res,
+  UseFilters,
   UseGuards,
 } from '@nestjs/common';
 import { CreateCatDto } from './dto/create.cat.dto';
@@ -18,6 +22,8 @@ import { Public } from '../auth/meta/publicMeta';
 import { AuthGuard } from '../auth/auth.guard';
 import { Roles } from '../auth/meta/roles.decorator';
 import { RolesGuard } from '../roles/roles.guard';
+import { HttpExceptionFilter } from '../http-exception/http-exception.filter';
+import { Request } from 'express';
 
 @Controller('cats')
 @UseGuards(AuthGuard, RolesGuard)
@@ -30,8 +36,26 @@ export class CatsController {
 
   @Public()
   @Get()
-  async findAll(): Promise<ICat[]> {
+  async findAll(@Req() req: Request): Promise<ICat[]> {
+    this.logger.debug(`cookeies:  ${req.cookies.access_token}`);
+    this.logger.debug(`cookeies:  ${req.cookies.refresh_token}`);
+
     return this.catService.findAll();
+  }
+  @Public()
+  @Get('verify')
+  async verify(@Req() req: Request) {
+    this.logger.debug(`cookeies:  ${req.cookies.access_token}`);
+    this.logger.debug(`cookeies:  ${req.cookies.refresh_token}`);
+
+    return `Get all cookies`;
+  }
+
+  @Public()
+  @UseFilters(new HttpExceptionFilter())
+  @Get('problem')
+  async problem() {
+    throw new ConflictException(`Can't find the problem`);
   }
 
   @Post()
