@@ -4,7 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 
 @Global()
 @Module({
-  imports: [ConfigModule.forRoot()],
+  imports: [ConfigModule.forRoot({ isGlobal: true })],
   providers: [ApiconfigService],
   exports: [ApiconfigService],
 })

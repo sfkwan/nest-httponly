@@ -33,6 +33,7 @@
     "reflect-metadata": "^0.1.14",
     "rxjs": "^7.8.1",
     "spdy": "^4.0.2",
+    "uuidv4": "^6.2.13",
     "winston": "^3.12.0"
   },
   "devDependencies": {
