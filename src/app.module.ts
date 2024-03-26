@@ -8,10 +8,7 @@ import { SimpleLoggerMiddleware } from './middleware/simple-logger.middleware';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ClsModule } from 'nestjs-cls';
-import { LoggerModule } from './logger/logger.module';
-import { WinstonModule, utilities } from 'nest-winston';
-import { instance } from './logger/winston.logger';
-import winston from 'winston';
+import { WinstonModule } from 'nest-winston';
 import { loggerConfig } from './logger/winston.config';
 
 @Module({
@@ -25,31 +22,16 @@ import { loggerConfig } from './logger/winston.config';
         },
       },
     }),
+    WinstonModule.forRoot(loggerConfig),
 
-    WinstonModule.forRootAsync({
-      useFactory: ()=> {      {transports: [
-        new winston.transports.Console({
-          level: process.env.NODE_ENV === 'production' ? 'info' : 'silly',
-          format: winston.format.combine(
-            winston.format.json(),
-            winston.format.timestamp(),
-          ),
-        }),
-      ]}},
-
-    
     ApiconfigModule,
     CatsModule,
     LoginModule,
     AuthModule,
     UsersModule,
-    LoggerModule,
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    // , Logger
-  ],
+  providers: [AppService, Logger],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

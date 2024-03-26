@@ -5,17 +5,12 @@ import {
   Delete,
   Get,
   Inject,
-  Logger,
   LoggerService,
   Param,
   Post,
   Put,
   Req,
-<<<<<<< HEAD
-  Res,
   UseFilters,
-=======
->>>>>>> origin/master
   UseGuards,
 } from '@nestjs/common';
 import { CreateCatDto } from './dto/create.cat.dto';
@@ -28,8 +23,6 @@ import { AuthGuard } from '../auth/auth.guard';
 import { Roles } from '../auth/meta/roles.decorator';
 import { RolesGuard } from '../roles/roles.guard';
 import { HttpExceptionFilter } from '../http-exception/http-exception.filter';
-import { Request } from 'express';
-
 import { Request } from 'express';
 import { ClsService } from 'nestjs-cls';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
@@ -48,12 +41,16 @@ export class CatsController {
   @Public()
   @Get()
   async findAll(@Req() req: Request): Promise<ICat[]> {
-    this.logger.debug(`cookeies:  ${req.cookies.access_token}`);
-    this.logger.debug(`cookeies:  ${req.cookies.refresh_token}`);
+    this.logger.debug(
+      JSON.stringify({ accesscookeies: req.cookies.access_token }),
+    );
+    this.logger.debug(
+      JSON.stringify({ refreshcookeies: req.cookies.refresh_token }),
+    );
 
     const xRequestId = this.cls.get('x-request-id');
     this.logger.log({
-      'Access token': req.cookies['access-token'],
+      'Access token': req.cookies['access_token'],
       'x-request-id': xRequestId,
     });
     return this.catService.findAll();

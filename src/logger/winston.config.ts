@@ -8,7 +8,7 @@ const transports: winston.LoggerOptions['transports'] = [
 
 // Create and export the logger instance
 export const loggerConfig: WinstonModuleOptions = {
-  level: 'info',
+  level: 'debug',
   format: winston.format.json(),
   transports,
 };
