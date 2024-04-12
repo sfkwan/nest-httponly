@@ -11,6 +11,7 @@ export class LoginController {
       sameSite: 'none',
       secure: true,
       path: '/oidc/refresh-tokens',
+      partitioned: true,
     });
 
     res.cookie('access-token', `${new Date().getTime() / 1000}`, {
@@ -18,7 +19,8 @@ export class LoginController {
       httpOnly: true,
       sameSite: 'none',
       secure: true,
-      path: '/verify',
+      path: '/cats',
+      partitioned: true,
     });
 
     const login = {
